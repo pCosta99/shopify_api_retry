@@ -134,7 +134,7 @@ module ShopifyAPIRetry
       snooze -= waited
       # sleep returns the rounded time slept but sometimes it's rounded up, others it's down
       # given this, we may sleep for more than requested
-      sleep snooze if snooze > 0
+      sleep snooze if snooze.positive?
 
       handler[:attempts] += 1
 
