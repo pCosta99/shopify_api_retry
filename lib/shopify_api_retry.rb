@@ -152,10 +152,8 @@ module ShopifyAPIRetry
       handler = super
       return handler if handler || !error.respond_to?(:code)
 
-      handler = handlers[error.code] || handlers["#{error.code[0]}XX"]
-      if error.code == HTTP_RETRY_STATUS
-        handler[:wait] ||= config.default_wait
-      end
+      handler = handlers[error.code.to_s] || handlers["#{error.code.to_s[0]}XX"]
+      handler[:wait] ||= config.default_wait if error.code.to_s == HTTP_RETRY_STATUS
 
       handler
     end
